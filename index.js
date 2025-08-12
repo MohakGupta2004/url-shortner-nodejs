@@ -3,6 +3,7 @@ import connectDB from './db/database.js';
 import urlRouter from './routes/url.routes.js';
 import authRouter from './routes/auth.routes.js';
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser';
 
 //env variable setup
 dotenv.config()
@@ -16,6 +17,7 @@ const app = express();
 
 //middlewares
 app.use(express.json())
+app.use(cookieParser());
 
 //routes
 app.use("/", urlRouter)
