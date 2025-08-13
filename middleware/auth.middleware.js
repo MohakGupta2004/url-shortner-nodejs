@@ -1,17 +1,16 @@
-import { getSession } from "../services/auth.service.js";
-
+import jwt from 'jsonwebtoken'
 
 function isLoggedIn(req, res, next){
-    console.log(req.cookies.sessionId)
-    const user = getSession(req.cookies.sessionId)
-    console.log(user)
-    if(!user){
-       res.json({
-        message: "Please login again"
-       }) 
-       return;
+    const accessToken = req.cookies.accessToken
+    const decoded = jwt.verify(accessToken,process.env.JWT_SECRET);
+    if(!decoded.username){
+        res.status(401).json({
+            message: "Unauthorized"
+        })
+        return;
     }
-    next()
+    req.user = decoded;
+    next();
 }
 
 export default isLoggedIn
