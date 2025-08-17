@@ -9,7 +9,7 @@ function isLoggedIn(req, res, next){
         })
         return;
     }
-    req.user = decoded;
+    req.user = decoded.user;
     next();
 }
 
